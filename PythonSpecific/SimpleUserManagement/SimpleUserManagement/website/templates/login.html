@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Login</title>
+		<style>
+			form {
+			    margin: 0 auto;
+			    width: 400px;
+			    padding: 1em;
+			    border: 1px solid #CCC;
+    			border-radius: 1em;
+    			background-color: #A1F3A1;
+			}
+			h1, .button {
+				text-align: center;
+			}
+			form div + div {
+			    margin-top: 1em;
+			}
+			input:focus, textarea:focus {
+			    border-color:  #17b517;
+			}
+			div:hover {
+				color:  #17b517;
+			}
+		</style>
+	</head>
+	<body>
+		<form action="" method="POST">
+		{% csrf_token %}
+			<h1>Login</h1>
+			<div>
+				<label for="email">Email:</label>
+        		<input type="email" id="email" name="email" value="{{email}}"/>
+			</div>
+			<div>
+				<label for="passowrd">Password:</label>
+        		<input type="password" id="passowrd" name="password" value="{{password}}"/>
+			</div>
+
+			<div class='button'>
+			<button type="submit" formmethod='POST' value='Login'>Login</button>
+			</div>
+			
+		</form>
+	</body>
+</html>

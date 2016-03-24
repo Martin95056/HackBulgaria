@@ -1,0 +1,185 @@
+import copy
+
+
+def to_digits(n):
+    list = []
+    for i in str(n):
+        list.append (int(i))
+
+    return list
+
+def palindrome(obj):
+    return str(obj) == str(obj)[::-1]
+
+def to_number(digits):
+    new = " "
+    for i in digits:
+        new += str(i)
+    return new
+
+def is_number_balanced(n):
+	a = to_digits(n)
+	sum_i = 0
+	sum_j = 0
+	middle_len = len(a) // 2
+
+	if len(a) % 2 == 0:
+		for i in range(0, middle_len): #varti ot parviq (nuleviq) do parviq sreden elemnt(za cheten spisak)
+			sum_i += a[i]
+		for j in range(middle_len, len(a)):  #ot vtoriq sreden do kraq
+			sum_j += a[j]
+	else:
+		for i in range(0, middle_len): # ot parviq do elementa predi sredata
+			sum_i += a[i]
+		for j in range(middle_len + 1, len(a)): # ot elementa sled sredata do kraq
+			sum_j += a[j]
+		
+	return sum_i == sum_j
+		
+def is_increasing(seq):
+	for i in range(0, len(seq) - 1):
+		return seq[i] < seq[i + 1] and seq[len(seq) - 1 ] > seq[len(seq) - 2 ] #varvi i bez if-then-else
+
+def is_decreasing(seq):
+	for i in range(0, len(seq) - 1):
+		return seq[i] > seq[i + 1] and seq[len(seq) - 1 ] < seq[len(seq) - 2 ]
+
+def reverse(num):
+	return int(str(num)[::-1])
+
+def make_palindrome(n):
+	get_pal = to_digits(n)
+	middle_len = len(get_pal) // 2
+	list = []
+
+	if len(get_pal) % 2 == 1:
+		for i in range(0, middle_len):
+			list.append (get_pal[i])
+		pal = reverse(to_number(list))
+		list.append (get_pal[middle_len])
+		list.append (pal)
+			
+	else:
+		for i in range(0, middle_len):
+			list.append (get_pal[i])
+		pal = reverse(to_number(list))
+		list.append (pal)
+				
+	return to_number(list)
+
+def get_largest_palindrome(n):
+	if palindrome(n):
+		new = to_digits(n)
+		if len(new) % 2 == 1:
+			new[len(new) // 2] -= 1
+		else:
+			new[0] -= 1
+			new[len(new) - 1] -= 1
+		return to_number(new)
+	else:
+		return make_palindrome(n)
+
+def prime_numbers(n):
+	list_n = []
+	for i in range(1, n + 1):
+		list_n.append (i)
+	for index in range(1, len(list_n)):
+		for number in list_n:
+			if number % index == 0:
+				if index != number:
+					list_n.remove (number)
+
+	return list_n
+
+def is_anagram(a, b):
+	newA = a.lower()
+	newB = b.lower()
+	is_found = True
+	for symbol in range(0, len(newA)):
+		if newA[symbol] in newB:
+			is_found
+		else:
+			is_found == False
+	return is_found
+
+def birthday_ranges(birthdays, ranges):
+	sum_people = 0
+	list_births = []
+	for dates in range(0, len(ranges)):
+		for date_of_birth in birthdays:
+			if date_of_birth in range(ranges[dates][0], ranges[dates][1] + 1):
+				sum_people += 1
+		list_births.append (sum_people)
+		sum_people = 0
+
+	return list_births
+
+def is_transversal(transversal, family):
+	for group in family:
+		it = [x for x in group if x in transversal]
+		if len(it) == 0 or len(it) > 1:
+			return False
+
+	return True
+
+
+def sum_matrix(matrix):
+	return sum([sum(row) for row in matrix])
+
+NEIGHBORS = [(-1, -1), (-1, 0), (-1, 1),
+			(0, -1), (0, 0), (0, 1),
+			(1, -1), (1, -1), (1, 1)]
+
+def sum_matrix(matrix):
+	return sum([sum(row) for row in matrix])
+
+def in_bounds(matrix, pos):
+	if pos[0] >= len(matrix) or pos[0] < 0:
+		return False
+	
+	if pos[1] >= len(matrix[0]) or pos[1] < 0:
+		return False
+
+	return True
+
+def bomb(matrix, at):
+	if in_bounds(matrix, at) == False:
+		return natrix
+
+	target = matrix[at[0]][at[1]]
+	x, y = 0, 1
+
+	for position in NEIGHBORS:
+		position = (at[x] + position[x], at[y] + position[y])
+		if in_bounds(matrix, position) == True:
+			position_value = matrix[position[x]][position[y]]
+			matrix[position[x]][position[y]] -= min(target, position_value)
+
+		return matrix
+
+def matrix_bombing_plan(matrix):
+	result = {}
+	for i in range(len(matrix)):
+		for j in range(len(matrix[0])):
+			bombed = bomb(copy.deepcopy(matrix), (i, j))
+			result[(i, j)] = sum_matrix(bombed)
+
+	return result
+
+"""def generate_transversals(family):
+	vecs = len(family)
+	transversal = []
+	list_transversals = []
+	for x in family[0]:
+		#for z in range(0, len(family[y])):
+		for y in range(1, vecs):
+			for z in range(0, len(family[y])):
+				transversal.append (x)
+				transversal.append (family[y][z])
+			
+				list_transversals.append (transversal)
+				transversal = []
+
+	return list_transversals
+	"""
+
